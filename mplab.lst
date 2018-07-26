@@ -1,0 +1,288 @@
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 #include p12f675.inc
+                      00001         LIST
+                      00002 ; P12F675.INC  Standard Header File, Version 1.04    Microchip Technology, Inc.
+                      00284         LIST
+                      00002 
+  00000001            00003 GPIO_0 equ 0x01
+  00000002            00004 GPIO_1 equ 0x02
+                      00005 
+0000                  00006 rst     org     0x00
+0000   281D           00007    goto start
+                      00008 
+0004                  00009 int     org     0x04
+0004   2808           00010    goto inthandle
+                      00011   
+0008                  00012 intvector       org     0x08
+0008                  00013 inthandle
+0008   1283           00014    banksel INTCON 
+0009   1C0B           00015         BTFSS INTCON, GPIF ;if it is not a PORT interrupt return
+000A   0009           00016    retfie
+000B   1283           00017         banksel GPIO
+000C   1C85           00018         BTFSS GPIO, GPIO_0 ;if it is not a front signal return
+000D   0009           00019         retfie
+                      00020 
+000E   1283           00021         banksel INTCON 
+000F   138B           00022         BCF INTCON, GIE ;temporary disable interrupts
+                      00023         
+0010   1283           00024         banksel GPIO
+0011   1505           00025         BSF GPIO, GPIO_1
+                      00026 
+                      00027         ; active state of injector
+0012                  00028 step1
+0012   30FF           00029         MOVLW 0xFF
+0013   0B80           00030         DECFSZ W, 0x01
+0014   2812           00031         GOTO step1
+0015                  00032 step2 
+0015   30FF           00033         MOVLW 0xFF
+0016   0B80           00034         DECFSZ W, 0x01
+0017   2815           00035         GOTO step2
+                      00036 
+0018   1105           00037         BCF GPIO, GPIO_1
+                      00038 
+0019   1283           00039         banksel INTCON
+001A   100B           00040         BCF INTCON, GPIF
+001B   178B           00041         BSF INTCON, GIE
+001C   0009           00042         retfie
+                      00043 
+001D                  00044 start
+                      00045    ;hardware settings
+001D   1283           00046    banksel  GPIO
+001E   0185           00047    clrf GPIO
+001F   1683           00048    banksel  TRISIO
+0020   3001           00049    movlw GPIO_0 ;set GPIO<0> as input, GPIO<1> as output
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0021   0085           00050    movwf TRISIO 
+                      00051    
+                      00052    ;setup interrupts
+0022   1683           00053    banksel  IOC   
+0023   3001           00054    movlw GPIO_0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0024   0096           00055    movwf IOC    
+0025   1283           00056    banksel INTCON 
+0026   018B           00057    clrf INTCON
+0027   178B           00058    bsf INTCON, GIE ;Enable Global Int's
+0028   158B           00059    bsf INTCON, GPIE ;Port Change Interrupt Enable bit
+                      00060    
+                      00061    ;main loop
+0029   2829           00062    goto  $
+                      00063    end
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADCON0                            0000001F
+ADCS0                             00000004
+ADCS1                             00000005
+ADCS2                             00000006
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANS0                              00000000
+ANS1                              00000001
+ANS2                              00000002
+ANS3                              00000003
+ANSEL                             0000009F
+C                                 00000000
+CAL0                              00000002
+CAL1                              00000003
+CAL2                              00000004
+CAL3                              00000005
+CAL4                              00000006
+CAL5                              00000007
+CHS0                              00000002
+CHS1                              00000003
+CINV                              00000004
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             00000019
+CMIE                              00000003
+CMIF                              00000003
+COUT                              00000006
+DC                                00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDAT                             0000009A
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+GO                                00000001
+GO_DONE                           00000001
+GP0                               00000000
+GP1                               00000001
+GP2                               00000002
+GP3                               00000003
+GP4                               00000004
+GP5                               00000005
+GPIE                              00000003
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+GPIF                              00000000
+GPIO                              00000005
+GPIO0                             00000000
+GPIO1                             00000001
+GPIO2                             00000002
+GPIO3                             00000003
+GPIO4                             00000004
+GPIO5                             00000005
+GPIO_0                            00000001
+GPIO_1                            00000002
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOC                               00000096
+IOC0                              00000000
+IOC1                              00000001
+IOC2                              00000002
+IOC3                              00000003
+IOC4                              00000004
+IOC5                              00000005
+IOCB                              00000096
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
+IOCB3                             00000003
+IOCB4                             00000004
+IOCB5                             00000005
+IRP                               00000007
+NOT_BOD                           00000000
+NOT_DONE                          00000001
+NOT_GPPU                          00000007
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OPTION_REG                        00000081
+OSCCAL                            00000090
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+STATUS                            00000003
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1IE                              00000000
+T1IF                              00000000
+T1OSCEN                           00000003
+TMR0                              00000001
+TMR1CS                            00000001
+TMR1GE                            00000006
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TRISIO                            00000085
+VCFG                              00000006
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             00000099
+VREN                              00000007
+VRR                               00000005
+W                                 00000000
+WPU                               00000095
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00003F7F
+_EC_OSC                           00003FFB
+_EXTRC_OSC_CLKOUT                 00003FFF
+_EXTRC_OSC_NOCLKOUT               00003FFE
+_HS_OSC                           00003FFA
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FF8
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FEF
+_WDT_OFF                          00003FF7
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FF9
+MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__12F675                          00000001
+int                               00000004
+inthandle                         00000008
+intvector                         00000008
+rst                               00000000
+start                             0000001D
+step1                             00000012
+step2                             00000015
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : X---X---XXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXX------ ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    36
+Program Memory Words Free:   988
+
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     2 reported,     0 suppressed
+
+
