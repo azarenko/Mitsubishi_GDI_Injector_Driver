@@ -1,4 +1,4 @@
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  1
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -9,76 +9,95 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00002 ; P12F675.INC  Standard Header File, Version 1.04    Microchip Technology, Inc.
                       00284         LIST
                       00002 
-  00000001            00003 GPIO_0 equ 0x01
-  00000002            00004 GPIO_1 equ 0x02
+  00000020            00003 CNT1 equ 0x20
+  00000021            00004 CNT2 equ 0x21
                       00005 
 0000                  00006 rst     org     0x00
-0000   281D           00007    goto start
-                      00008 
-0004                  00009 int     org     0x04
-0004   2808           00010    goto inthandle
-                      00011   
-0008                  00012 intvector       org     0x08
-0008                  00013 inthandle
-0008   1283           00014    banksel INTCON 
-0009   1C0B           00015         BTFSS INTCON, GPIF ;if it is not a PORT interrupt return
-000A   0009           00016    retfie
-000B   1283           00017         banksel GPIO
-000C   1C85           00018         BTFSS GPIO, GPIO_0 ;if it is not a front signal return
-000D   0009           00019         retfie
-                      00020 
-000E   1283           00021         banksel INTCON 
-000F   138B           00022         BCF INTCON, GIE ;temporary disable interrupts
-                      00023         
-0010   1283           00024         banksel GPIO
-0011   1505           00025         BSF GPIO, GPIO_1
-                      00026 
-                      00027         ; active state of injector
-0012                  00028 step1
-0012   30FF           00029         MOVLW 0xFF
-0013   0B80           00030         DECFSZ W, 0x01
-0014   2812           00031         GOTO step1
-0015                  00032 step2 
-0015   30FF           00033         MOVLW 0xFF
-0016   0B80           00034         DECFSZ W, 0x01
-0017   2815           00035         GOTO step2
-                      00036 
-0018   1105           00037         BCF GPIO, GPIO_1
-                      00038 
-0019   1283           00039         banksel INTCON
-001A   100B           00040         BCF INTCON, GPIF
-001B   178B           00041         BSF INTCON, GIE
-001C   0009           00042         retfie
-                      00043 
-001D                  00044 start
-                      00045    ;hardware settings
-001D   1283           00046    banksel  GPIO
-001E   0185           00047    clrf GPIO
-001F   1683           00048    banksel  TRISIO
-0020   3001           00049    movlw GPIO_0 ;set GPIO<0> as input, GPIO<1> as output
+                      00007 
+0000   2820           00008         goto    start
+                      00009 
+0004                  00010 int     org     0x04
+0004   0009           00011         retfie
+                      00012   
+0020                  00013 start org 0x20
+                      00014         ;hardware settings
+0020   1683           00015     banksel ANSEL
+0021   3000           00016         movlw 00h 
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  2
+0022   009F           00017         movwf ANSEL
+                      00018 
+0023   1283           00019         banksel ADCON0
+0024   3000           00020         movlw 00h 
+0025   009F           00021         movwf ADCON0
+                      00022 
+0026   1283           00023         banksel CMCON
+0027   3007           00024         movlw 07h 
+0028   0099           00025         movwf CMCON
+                      00026 
+0029   1683           00027         banksel VRCON
+002A   3000           00028         movlw 00h 
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+002B   0099           00029         movwf VRCON    
+                      00030 
+002C   1683           00031         banksel TRISIO
+002D   3001           00032         movlw 01h ;set GPIO<0> as input, all others as ouptut
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+002E   0085           00033         movwf TRISIO
+                      00034 
+002F   1283           00035         banksel GPIO
+0030   0185           00036         clrf GPIO
+                      00037 
+0031                  00038 begin   
+0031   1283           00039         banksel  GPIO
+0032   1805           00040         BTFSC GPIO, 00h ;if it is not a front signal return
+0033   2831           00041         goto begin
+                      00042         
+0034   1283           00043         banksel GPIO
+0035   1485           00044         BSF GPIO, 01h
+                      00045 
+0036   3005           00046         MOVLW 0x05
+0037   00A0           00047         movwf CNT1
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0021   0085           00050    movwf TRISIO 
-                      00051    
-                      00052    ;setup interrupts
-0022   1683           00053    banksel  IOC   
-0023   3001           00054    movlw GPIO_0
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0024   0096           00055    movwf IOC    
-0025   1283           00056    banksel INTCON 
-0026   018B           00057    clrf INTCON
-0027   178B           00058    bsf INTCON, GIE ;Enable Global Int's
-0028   158B           00059    bsf INTCON, GPIE ;Port Change Interrupt Enable bit
-                      00060    
-                      00061    ;main loop
-0029   2829           00062    goto  $
-                      00063    end
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  3
+                      00048 
+0038                  00049 first_counter
+0038   0BA0           00050         DECFSZ CNT1, 1
+0039   283B           00051         GOTO second_counter
+003A   2840           00052         GOTO end_of_pulse    
+                      00053 
+003B                  00054 second_counter
+003B   300A           00055         MOVLW 0x0A
+003C   00A1           00056         movwf CNT2
+003D   0BA1           00057         DECFSZ CNT2, 1
+003E   283D           00058         GOTO $ - 1
+003F   2838           00059         GOTO first_counter
+                      00060 
+0040                  00061 end_of_pulse
+0040   1085           00062         BCF GPIO, 01h
+                      00063 
+                      00064         ;pause
+0041   3001           00065         MOVLW 0x01
+0042   00A0           00066         movwf CNT1
+                      00067 
+0043                  00068 pause_first_counter
+0043   0BA0           00069         DECFSZ CNT1, 1
+0044   2846           00070         GOTO pause_second_counter
+0045   2831           00071         GOTO begin
+                      00072 
+0046                  00073 pause_second_counter
+0046   3001           00074         MOVLW 0x01
+0047   00A1           00075         movwf CNT2
+0048   0BA1           00076         DECFSZ CNT2, 1
+0049   2848           00077         GOTO $ - 1
+004A   2843           00078         GOTO pause_first_counter
+                      00079 
+004B   2831           00080         goto begin
+                      00081         end
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  3
 
 
 SYMBOL TABLE
@@ -116,6 +135,8 @@ CM2                               00000002
 CMCON                             00000019
 CMIE                              00000003
 CMIF                              00000003
+CNT1                              00000020
+CNT2                              00000021
 COUT                              00000006
 DC                                00000001
 EEADR                             0000009B
@@ -135,14 +156,14 @@ GP1                               00000001
 GP2                               00000002
 GP3                               00000003
 GP4                               00000004
-GP5                               00000005
-GPIE                              00000003
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  4
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  4
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+GP5                               00000005
+GPIE                              00000003
 GPIF                              00000000
 GPIO                              00000005
 GPIO0                             00000000
@@ -151,8 +172,6 @@ GPIO2                             00000002
 GPIO3                             00000003
 GPIO4                             00000004
 GPIO5                             00000005
-GPIO_0                            00000001
-GPIO_1                            00000002
 INDF                              00000000
 INTCON                            0000000B
 INTE                              00000004
@@ -196,7 +215,7 @@ RD                                00000000
 RP0                               00000005
 RP1                               00000006
 STATUS                            00000003
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  5
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  5
 
 
 SYMBOL TABLE
@@ -255,34 +274,37 @@ _PWRTE_ON                         00003FEF
 _WDT_OFF                          00003FF7
 _WDT_ON                           00003FFF
 _XT_OSC                           00003FF9
-MPASM  5.05                         MPLAB.ASM   7-26-2018  11:17:06         PAGE  6
+MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  6
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
 __12F675                          00000001
+begin                             00000031
+end_of_pulse                      00000040
+first_counter                     00000038
 int                               00000004
-inthandle                         00000008
-intvector                         00000008
+pause_first_counter               00000043
+pause_second_counter              00000046
 rst                               00000000
-start                             0000001D
-step1                             00000012
-step2                             00000015
+second_counter                    0000003B
+start                             00000020
 
 
 MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
 
-0000 : X---X---XXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXX------ ----------------
+0000 : X---X----------- ---------------- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXX---- ---------------- ---------------- ----------------
 
 All other memory blocks unused.
 
-Program Memory Words Used:    36
-Program Memory Words Free:   988
+Program Memory Words Used:    46
+Program Memory Words Free:   978
 
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     2 reported,     0 suppressed
+Messages :     3 reported,     0 suppressed
 
 

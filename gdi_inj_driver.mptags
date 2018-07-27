@@ -6,12 +6,14 @@
 !_TAG_PROGRAM_VERSION	5.5.4	//
 !_TAG_REVISION_NAME	MCHPTags	//
 !_TAG_REVISION_VERSION	6.0.1	//
-GPIO_0	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	3;"	q	line:3
-GPIO_1	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	4;"	q	line:4
-int	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	9;"	l	line:9
-inthandle	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	13;"	l	line:13
-intvector	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	12;"	l	line:12
+CNT1	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	3;"	q	line:3
+CNT2	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	4;"	q	line:4
+begin	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	38;"	l	line:38
+end_of_pulse	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	61;"	l	line:61
+first_counter	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	49;"	l	line:49
+int	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	10;"	l	line:10
+pause_first_counter	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	68;"	l	line:68
+pause_second_counter	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	73;"	l	line:73
 rst	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	6;"	l	line:6
-start	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	44;"	l	line:44
-step1	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	28;"	l	line:28
-step2	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	32;"	l	line:32
+second_counter	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	54;"	l	line:54
+start	D:\projects\Mitsubishi_GDI_Injector_Driver\mplab.asm	13;"	l	line:13
