@@ -1,4 +1,4 @@
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  1
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -55,9 +55,9 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0034   1283           00043         banksel GPIO
 0035   1485           00044         BSF GPIO, 01h
                       00045 
-0036   3005           00046         MOVLW 0x05
+0036   3002           00046         MOVLW 0x02
 0037   00A0           00047         movwf CNT1
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  2
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -70,7 +70,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 003A   2840           00052         GOTO end_of_pulse    
                       00053 
 003B                  00054 second_counter
-003B   300A           00055         MOVLW 0x0A
+003B   3040           00055         MOVLW 0x40
 003C   00A1           00056         movwf CNT2
 003D   0BA1           00057         DECFSZ CNT2, 1
 003E   283D           00058         GOTO $ - 1
@@ -80,7 +80,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0040   1085           00062         BCF GPIO, 01h
                       00063 
                       00064         ;pause
-0041   3001           00065         MOVLW 0x01
+0041   3096           00065         MOVLW 0x96
 0042   00A0           00066         movwf CNT1
                       00067 
 0043                  00068 pause_first_counter
@@ -89,7 +89,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0045   2831           00071         GOTO begin
                       00072 
 0046                  00073 pause_second_counter
-0046   3001           00074         MOVLW 0x01
+0046   30FF           00074         MOVLW 0xFF
 0047   00A1           00075         movwf CNT2
 0048   0BA1           00076         DECFSZ CNT2, 1
 0049   2848           00077         GOTO $ - 1
@@ -97,7 +97,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00079 
 004B   2831           00080         goto begin
                       00081         end
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  3
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  3
 
 
 SYMBOL TABLE
@@ -156,7 +156,7 @@ GP1                               00000001
 GP2                               00000002
 GP3                               00000003
 GP4                               00000004
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  4
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  4
 
 
 SYMBOL TABLE
@@ -215,7 +215,7 @@ RD                                00000000
 RP0                               00000005
 RP1                               00000006
 STATUS                            00000003
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  5
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  5
 
 
 SYMBOL TABLE
@@ -274,7 +274,7 @@ _PWRTE_ON                         00003FEF
 _WDT_OFF                          00003FF7
 _WDT_ON                           00003FFF
 _XT_OSC                           00003FF9
-MPASM  5.05                         MPLAB.ASM   7-27-2018  17:19:18         PAGE  6
+MPASM  5.05                         MPLAB.ASM   7-30-2018  12:13:48         PAGE  6
 
 
 SYMBOL TABLE

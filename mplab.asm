@@ -43,7 +43,7 @@ begin
 	banksel GPIO
 	BSF GPIO, 01h
 
-	MOVLW 0x05
+	MOVLW 0x02
 	movwf CNT1
 
 first_counter
@@ -52,7 +52,7 @@ first_counter
 	GOTO end_of_pulse    
 
 second_counter
-	MOVLW 0x0A
+	MOVLW 0x40
 	movwf CNT2
 	DECFSZ CNT2, 1
 	GOTO $ - 1
@@ -62,7 +62,7 @@ end_of_pulse
 	BCF GPIO, 01h
 
 	;pause
-	MOVLW 0x01
+	MOVLW 0x96
 	movwf CNT1
 
 pause_first_counter
@@ -71,7 +71,7 @@ pause_first_counter
 	GOTO begin
 
 pause_second_counter
-	MOVLW 0x01
+	MOVLW 0xFF
 	movwf CNT2
 	DECFSZ CNT2, 1
 	GOTO $ - 1
