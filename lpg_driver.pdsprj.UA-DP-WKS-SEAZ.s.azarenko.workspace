@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="1">
-  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffffab0000000d000000d506000003040000</PLACEMENT>
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffffab0000000d000000d506000003040000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
   <WINDOW type="default" module="ARES"/>
   <WINDOW type="default" module="VSMSTUDIO">
@@ -76,7 +76,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="1">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="178" flags="80000002" y="269" h="8" pid="8" iid="1">
+   <POPUP w="8" x="178" flags="00000000" y="269" h="8" pid="8" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -122,7 +122,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="19">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="298" flags="80000002" y="389" h="8" pid="8" iid="19">
+   <POPUP w="8" x="298" flags="00000000" y="389" h="8" pid="8" iid="19">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -168,7 +168,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="26">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="418" flags="80000002" y="509" h="8" pid="8" iid="26">
+   <POPUP w="8" x="418" flags="00000000" y="509" h="8" pid="8" iid="26">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -214,7 +214,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="33">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="538" flags="80000002" y="629" h="8" pid="8" iid="33">
+   <POPUP w="8" x="538" flags="00000000" y="629" h="8" pid="8" iid="33">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -260,7 +260,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="40">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="658" flags="80000002" y="749" h="8" pid="8" iid="40">
+   <POPUP w="8" x="658" flags="00000000" y="749" h="8" pid="8" iid="40">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -306,7 +306,7 @@
    <POPUP w="98" x="5" flags="00000008" y="105" h="28" pid="7" iid="47">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="778" flags="80000002" y="869" h="8" pid="8" iid="47">
+   <POPUP w="8" x="778" flags="00000000" y="869" h="8" pid="8" iid="47">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
